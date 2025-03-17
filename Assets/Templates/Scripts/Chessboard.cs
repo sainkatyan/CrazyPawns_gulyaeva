@@ -31,8 +31,10 @@ namespace CrazyPawn
         {
             float cellScale = chessboardMaterial.GetFloat("_Scale") / 2f;
             float chessboardSize = settings.CheckerboardSize * cellScale;
+            float localHeight = transform.localScale.y;
             
-            transform.localScale = new Vector3(chessboardSize, 0.1f, chessboardSize);
+            transform.localScale = new Vector3(chessboardSize, localHeight, chessboardSize);
+            transform.position = new Vector3(0f, -localHeight, 0f);
         }
         
         private void SetColors()
