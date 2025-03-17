@@ -4,11 +4,13 @@ namespace CrazyPawn
 {
     public class Chessboard : MonoBehaviour
     {
-        [SerializeField] private CrazyPawnSettings settings;
+        private CrazyPawnSettings settings;
         private Material chessboardMaterial;
 
-        private void Awake()
+        public void Init(CrazyPawnSettings settings)
         {
+            this.settings = settings;
+            
             Renderer renderer = GetComponent<Renderer>();
             if (renderer != null)
             {

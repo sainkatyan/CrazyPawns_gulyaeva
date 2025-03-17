@@ -2,26 +2,31 @@
 
 namespace CrazyPawn
 {
-    public class SpawnController : MonoBehaviour
+    public class PawnController : MonoBehaviour
     {
-        [SerializeField] private CrazyPawnSettings settings;
-        [SerializeField] private GameObject spawnPrefab;
-
-        private void Start()
+        [SerializeField] private GameObject pawnPrefab;
+        
+        private CrazyPawnSettings settings;
+        private SpawnFactory factory;
+        
+        public void Init(CrazyPawnSettings settings)
         {
-            SpawnPawnsObject();
+            this.settings = settings;
+
+            factory = new SpawnFactory(pawnPrefab);
+            SpawnPawnObjects();
         }
 
-        private void SpawnPawnsObject()
+        private void SpawnPawnObjects()
         {
-            if (spawnPrefab == null) return;
+            if (pawnPrefab == null) return;
             for (int i = 0; i < settings.InitialPawnCount; i++)
             {
                 Vector3 spawnPosition = GetRandomPointInCircle();
-                Instantiate(spawnPrefab, spawnPosition, Quaternion.identity);
+                factory.Create(spawnPosition, Quaternion.identity);
             }
         }
-
+        
         private Vector3 GetRandomPointInCircle()
         {
             float angle = Random.Range(0f, Mathf.PI * 2); 
