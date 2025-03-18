@@ -4,13 +4,19 @@ namespace CrazyPawn
 {
     public class GameManager : MonoBehaviour
     {
-        [SerializeField] private CrazyPawnSettings settings;
-        [SerializeField] private Chessboard chessboard;
-        [SerializeField] private PawnController pawnController;
-        private void Start()
+        public static GameManager Instance { get; private set; }
+        
+        public CrazyPawnSettings Settings;
+        public Chessboard Chessboard;
+        public PawnController PawnController;
+        public ConnectionManager ConnectionManager;
+
+        private void Awake()
         {
-            chessboard.Init(settings);
-            pawnController.Init(settings, chessboard);
+            if (Instance == null)
+                Instance = this;
+            else
+                Destroy(gameObject);
         }
     }
 }

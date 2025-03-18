@@ -5,7 +5,8 @@ namespace CrazyPawn
     public class InputController : MonoBehaviour
     {
         private Camera camera;
-        private IDraggable currentDraggable;
+        private IDraggable currentDraggablePawn;
+        private Socket draggingSocket;
         [SerializeField] private Transform chessboard;
 
         private void Start()
@@ -20,15 +21,20 @@ namespace CrazyPawn
                 TryStartDrag();
             }
 
-            if (Input.GetMouseButton(0) && currentDraggable != null)
+            if (Input.GetMouseButton(0) && currentDraggablePawn != null)
             {
                 Drag();
             }
 
-            if (Input.GetMouseButtonUp(0) && currentDraggable != null) // ЛКМ отпущена
+            if (Input.GetMouseButtonUp(0)) 
             {
-                currentDraggable.OnDragEnd();
-                currentDraggable = null;
+                if (currentDraggablePawn != null)
+                {
+                    currentDraggablePawn.OnDragEnd();
+                    currentDraggablePawn = null;
+                }
+                
+                FinishDrag();
             }
         }
 
@@ -40,23 +46,48 @@ namespace CrazyPawn
                 if (hit.collider.gameObject.CompareTag("PawnBody"))
                 {
                     IDraggable draggable = hit.collider.GetComponentInParent<IDraggable>();
-                    currentDraggable = draggable;
-                    currentDraggable.OnDragStart();
+                    currentDraggablePawn = draggable;
+                    currentDraggablePawn.OnDragStart();
+                }
+                
+                draggingSocket = hit.collider.GetComponent<Socket>();
+                if (draggingSocket != null)
+                {
+                    draggingSocket.OnDragStart();
                 }
             }
         }
 
         private void Drag()
         {
-            if (currentDraggable == null) return;
+            if (currentDraggablePawn == null) return;
             Ray ray = camera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
             {
                 if (hit.transform == chessboard.transform)
                 {
                     Vector3 newPosition = hit.point;
-                    currentDraggable.OnDrag(new Vector3(newPosition.x, 0f, newPosition.z));
+                    currentDraggablePawn.OnDrag(new Vector3(newPosition.x, 0f, newPosition.z));
                 }
+            }
+        }
+
+        private void FinishDrag()
+        {
+            Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                Socket targetSocket = hit.collider.GetComponent<Socket>();
+                if (targetSocket != null && draggingSocket != targetSocket && draggingSocket.CanConnectTo(targetSocket))
+                {
+                    GameManager.Instance.ConnectionManager.CreateConnection(draggingSocket, targetSocket);
+                }
+            }
+
+            if (draggingSocket != null)
+            {
+                draggingSocket.OnDragEnd();
+                draggingSocket = null;
             }
         }
     }

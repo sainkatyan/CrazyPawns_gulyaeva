@@ -10,12 +10,12 @@ namespace CrazyPawn
         private CrazyPawnSettings settings;
         private SpawnFactory factory;
         
-        public void Init(CrazyPawnSettings settings, Chessboard chessboard)
+        public void Start()
         {
-            this.settings = settings;
+            this.settings = GameManager.Instance.Settings;
 
             factory = new SpawnFactory(pawn.gameObject);
-            pawn.SetChessBoardLimit(chessboard.GetChessboardLimit());
+            pawn.SetChessBoardLimit(GameManager.Instance.Chessboard.GetChessboardLimit());
             SpawnPawnObjects();
         }
 

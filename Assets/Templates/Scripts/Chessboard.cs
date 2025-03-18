@@ -7,9 +7,9 @@ namespace CrazyPawn
         private CrazyPawnSettings settings;
         private Material chessboardMaterial;
 
-        public void Init(CrazyPawnSettings settings)
+        public void Start()
         {
-            this.settings = settings;
+            settings = GameManager.Instance.Settings;
             
             Renderer renderer = GetComponent<Renderer>();
             if (renderer != null)
