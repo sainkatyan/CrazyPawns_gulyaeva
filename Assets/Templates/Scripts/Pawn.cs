@@ -1,17 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace CrazyPawn
 {
     public class Pawn : MonoBehaviour, ISpawnable, IDraggable
     {
+        public event Action OnPositionChanged;
+        public event Action OnDestroyed;
+        
         public float boardLimit;
 
         [SerializeField] private CrazyPawnSettings settings;
         [SerializeField] private BoxCollider pawnBodyCollider;
 
         public Material defaultMaterial;
-        private Material activeConnectMaterial;
         private Material deleteMaterial;
 
         private List<MeshRenderer> renderers;
@@ -39,9 +42,7 @@ namespace CrazyPawn
 
         private void InitPawnSettings()
         {
-            activeConnectMaterial = settings.ActiveConnectorMaterial;
             deleteMaterial = settings.DeleteMaterial;
-
             pawnBodyCollider.enabled = true;
         }
 
@@ -60,6 +61,7 @@ namespace CrazyPawn
         {
             targetPosition = position;
             CheckBounds();
+            OnPositionChanged?.Invoke();
         }
 
         private void Update()
@@ -76,6 +78,7 @@ namespace CrazyPawn
             if (IsOutside())
             {
                 Destroy(gameObject);
+                OnDestroyed?.Invoke();
             }
             else
             {
@@ -101,11 +104,6 @@ namespace CrazyPawn
         {
             if (Mathf.Abs(transform.position.x) > boardLimit) return true;
             return Mathf.Abs(transform.position.z) > boardLimit;
-        }
-
-        private void ActivateConnection()
-        {
-            ChangeMaterial(activeConnectMaterial);
         }
 
         private void DeleteMaterial()

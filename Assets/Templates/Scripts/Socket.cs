@@ -18,6 +18,11 @@ namespace CrazyPawn
             allSockets.Add(this);
         }
 
+        public Pawn GetPawn()
+        {
+            return GetComponentInParent<Pawn>();
+        }
+
         private void OnDestroy()
         {
             allSockets.Remove(this);

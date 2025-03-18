@@ -241,6 +241,37 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 1
+--- !u!1 &569857061
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 569857062}
+  m_Layer: 0
+  m_Name: PoolConnections
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &569857062
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 569857061}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -7.853152, y: 3.7076063, z: 1.9558287}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &809600273 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8770587609406714606, guid: 9e875f9d6cebd9a4b8e55e1f16ad8eb5,
@@ -269,8 +300,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2139539074}
   - component: {fileID: 2139539075}
-  - component: {fileID: 2139539073}
   - component: {fileID: 2139539076}
+  - component: {fileID: 2139539073}
+  - component: {fileID: 2139539078}
+  - component: {fileID: 2139539077}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -290,8 +323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91dbd5e123c2493898e83390fa93832e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pawnPrefab: {fileID: 4336407271673045507, guid: 2c0325599477842329501387d1984e5b,
-    type: 3}
+  pawn: {fileID: 4439124359508805423, guid: 2c0325599477842329501387d1984e5b, type: 3}
 --- !u!4 &2139539074
 Transform:
   m_ObjectHideFlags: 0
@@ -319,9 +351,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89aa076c57f54e628a4be6995d038f62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  settings: {fileID: 11400000, guid: c3b00c709b1f94f22a212add39c80449, type: 2}
-  chessboard: {fileID: 809600273}
-  pawnController: {fileID: 2139539073}
+  Settings: {fileID: 11400000, guid: c3b00c709b1f94f22a212add39c80449, type: 2}
+  Chessboard: {fileID: 809600273}
+  PawnController: {fileID: 2139539073}
+  ConnectionManager: {fileID: 2139539077}
 --- !u!114 &2139539076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -335,6 +368,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chessboard: {fileID: 809600277}
+--- !u!114 &2139539077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2139539072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8af122bfe6ef4af791d08cb9627ff94f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connectionPrefab: {fileID: 7703988162634510265, guid: cbe57c88a5421c34d8003cb3522d6373,
+    type: 3}
+  poolConnections: {fileID: 569857062}
+--- !u!114 &2139539078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2139539072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09f4de8ab2144e67818b92cc2bbc9e22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3515523165878480591
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -485,7 +545,8 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 2139539074}
   - {fileID: 410087041}
   - {fileID: 4796405414607977316}
   - {fileID: 3515523165878480591}
-  - {fileID: 2139539074}
+  - {fileID: 569857062}

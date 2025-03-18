@@ -33,8 +33,11 @@ namespace CrazyPawn
                     currentDraggablePawn.OnDragEnd();
                     currentDraggablePawn = null;
                 }
-                
-                FinishDrag();
+
+                if (draggingSocket != null)
+                {
+                    FinishDrag();
+                }
             }
         }
 

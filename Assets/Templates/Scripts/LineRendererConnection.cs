@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using Unity.VisualScripting;
+using UnityEngine;
 
 namespace CrazyPawn
 {
@@ -20,11 +22,25 @@ namespace CrazyPawn
             lineRenderer.material = new Material(Shader.Find("Unlit/Color")) { color = Color.white };
 
             UpdateLine();
+            SubscriveEvents();
         }
 
-        private void Update()
+        private void SubscriveEvents()
         {
-            UpdateLine();
+            connectorA.GetPawn().OnDestroyed += DestroyConnection;
+            connectorB.GetPawn().OnDestroyed += DestroyConnection;
+            
+            connectorA.GetPawn().OnPositionChanged += UpdateLine;
+            connectorB.GetPawn().OnPositionChanged += UpdateLine;
+        }
+        
+        private void UnSubscriveEvents()
+        {
+            connectorA.GetPawn().OnDestroyed -= DestroyConnection;
+            connectorB.GetPawn().OnDestroyed -= DestroyConnection;
+            
+            connectorA.GetPawn().OnPositionChanged -= UpdateLine;
+            connectorB.GetPawn().OnPositionChanged -= UpdateLine;
         }
 
         private void UpdateLine()
@@ -32,6 +48,12 @@ namespace CrazyPawn
             if (connectorA == null || connectorB == null) return;
             lineRenderer.SetPosition(0, connectorA.transform.position);
             lineRenderer.SetPosition(1, connectorB.transform.position);
+        }
+
+        private void DestroyConnection()
+        {
+            UnSubscriveEvents();
+            GameManager.Instance.ConnectionManager.RemoveConnection(this); 
         }
     }
 }

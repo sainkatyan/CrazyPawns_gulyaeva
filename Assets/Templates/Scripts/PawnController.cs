@@ -8,13 +8,13 @@ namespace CrazyPawn
         [SerializeField] private Pawn pawn;
         
         private CrazyPawnSettings settings;
-        private SpawnFactory factory;
+        private SpawnFactory<Pawn> factory;
         
         public void Start()
         {
             this.settings = GameManager.Instance.Settings;
 
-            factory = new SpawnFactory(pawn.gameObject);
+            factory = new SpawnFactory<Pawn>(pawn.gameObject);
             pawn.SetChessBoardLimit(GameManager.Instance.Chessboard.GetChessboardLimit());
             SpawnPawnObjects();
         }
