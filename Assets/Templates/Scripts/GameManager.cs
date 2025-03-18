@@ -10,7 +10,7 @@ namespace CrazyPawn
         private void Start()
         {
             chessboard.Init(settings);
-            pawnController.Init(settings);
+            pawnController.Init(settings, chessboard);
         }
     }
 }

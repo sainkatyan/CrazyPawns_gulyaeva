@@ -253,6 +253,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8afb8bb299045e384d5b041e09e5d71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &809600277 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 909245531371171636, guid: 9e875f9d6cebd9a4b8e55e1f16ad8eb5,
+    type: 3}
+  m_PrefabInstance: {fileID: 3515523165878480591}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2139539072
 GameObject:
   m_ObjectHideFlags: 0
@@ -264,6 +270,7 @@ GameObject:
   - component: {fileID: 2139539074}
   - component: {fileID: 2139539075}
   - component: {fileID: 2139539073}
+  - component: {fileID: 2139539076}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -283,7 +290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91dbd5e123c2493898e83390fa93832e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPrefab: {fileID: 4336407271673045507, guid: 2c0325599477842329501387d1984e5b,
+  pawnPrefab: {fileID: 4336407271673045507, guid: 2c0325599477842329501387d1984e5b,
     type: 3}
 --- !u!4 &2139539074
 Transform:
@@ -314,7 +321,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   settings: {fileID: 11400000, guid: c3b00c709b1f94f22a212add39c80449, type: 2}
   chessboard: {fileID: 809600273}
-  spawnController: {fileID: 2139539073}
+  pawnController: {fileID: 2139539073}
+--- !u!114 &2139539076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2139539072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 393b3aa68539466ebf702910e164a04a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chessboard: {fileID: 809600277}
 --- !u!1001 &3515523165878480591
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -341,7 +361,7 @@ PrefabInstance:
     - target: {fileID: 909245531371171636, guid: 9e875f9d6cebd9a4b8e55e1f16ad8eb5,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 909245531371171636, guid: 9e875f9d6cebd9a4b8e55e1f16ad8eb5,
         type: 3}

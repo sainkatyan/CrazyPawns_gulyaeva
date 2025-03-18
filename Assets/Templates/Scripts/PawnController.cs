@@ -1,25 +1,27 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CrazyPawn
 {
     public class PawnController : MonoBehaviour
     {
-        [SerializeField] private GameObject pawnPrefab;
+        [SerializeField] private Pawn pawn;
         
         private CrazyPawnSettings settings;
         private SpawnFactory factory;
         
-        public void Init(CrazyPawnSettings settings)
+        public void Init(CrazyPawnSettings settings, Chessboard chessboard)
         {
             this.settings = settings;
 
-            factory = new SpawnFactory(pawnPrefab);
+            factory = new SpawnFactory(pawn.gameObject);
+            pawn.SetChessBoardLimit(chessboard.GetChessboardLimit());
             SpawnPawnObjects();
         }
 
         private void SpawnPawnObjects()
         {
-            if (pawnPrefab == null) return;
+            if (pawn == null) return;
             for (int i = 0; i < settings.InitialPawnCount; i++)
             {
                 Vector3 spawnPosition = GetRandomPointInCircle();

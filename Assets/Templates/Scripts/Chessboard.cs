@@ -44,5 +44,10 @@ namespace CrazyPawn
             chessboardMaterial.SetColor("_Color1", settings.BlackCellColor);
             chessboardMaterial.SetColor("_Color2", settings.WhiteCellColor);
         }
+
+        public float GetChessboardLimit()
+        {
+            return transform.localScale.x / 2f - 1f;
+        }
     }
 }
