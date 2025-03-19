@@ -169,10 +169,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 097376c18a4744b38c96a579c3b96e01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boardLimit: 0
   settings: {fileID: 11400000, guid: c3b00c709b1f94f22a212add39c80449, type: 2}
   pawnBodyCollider: {fileID: 7724141220265440265}
-  defaultMaterial: {fileID: 0}
+  currentSockets:
+  - {fileID: 5464830669931858653}
+  - {fileID: 3661738157739539956}
+  - {fileID: 5525949277700348050}
+  - {fileID: 1916120398805156514}
+  BoardLimit: 0
 --- !u!1 &6572458348302323540
 GameObject:
   m_ObjectHideFlags: 0

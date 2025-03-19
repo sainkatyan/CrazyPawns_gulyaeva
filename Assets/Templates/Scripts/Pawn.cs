@@ -6,18 +6,18 @@ namespace CrazyPawn
 {
     public class Pawn : MonoBehaviour, ISpawnable, IDraggable
     {
-        public event Action OnPositionChanged;
-        public event Action OnDestroyed;
-        
-        public float boardLimit;
-
         [SerializeField] private CrazyPawnSettings settings;
         [SerializeField] private BoxCollider pawnBodyCollider;
+        [SerializeField] private List<Socket> currentSockets;
+        public event Action OnPositionChanged;
+        public event Action OnDestroyed;
 
-        public Material defaultMaterial;
-        private Material deleteMaterial;
+        public float BoardLimit;
 
         private List<MeshRenderer> renderers;
+        private Material deleteMaterial;
+        private Material defaultMaterial;
+
         private Vector3 targetPosition;
 
         private bool isDragging = false;
@@ -46,9 +46,36 @@ namespace CrazyPawn
             pawnBodyCollider.enabled = true;
         }
 
+        private void Start()
+        {
+            AddCurrentSockets();
+        }
+
+        public void AddSocket(Socket socket)
+        {
+            if (currentSockets.Contains(socket)) return;
+            currentSockets.Add(socket);
+        }
+
+        private void AddCurrentSockets()
+        {
+            foreach (Socket item in currentSockets)
+            {
+                GameManager.Instance.SocketManager.AddSocket(item);
+            }
+        }
+
+        private void RemoveCurrentSockets()
+        {
+            foreach (Socket item in currentSockets)
+            {
+                GameManager.Instance.SocketManager.RemoveSocket(item);
+            }
+        }
+
         public void SetChessBoardLimit(float boardLimit)
         {
-            this.boardLimit = boardLimit;
+            this.BoardLimit = boardLimit;
         }
 
         public void OnDragStart()
@@ -77,8 +104,10 @@ namespace CrazyPawn
             pawnBodyCollider.enabled = true;
             if (IsOutside())
             {
-                Destroy(gameObject);
                 OnDestroyed?.Invoke();
+                RemoveCurrentSockets();
+
+                Destroy(gameObject);
             }
             else
             {
@@ -102,8 +131,8 @@ namespace CrazyPawn
 
         private bool IsOutside()
         {
-            if (Mathf.Abs(transform.position.x) > boardLimit) return true;
-            return Mathf.Abs(transform.position.z) > boardLimit;
+            if (Mathf.Abs(transform.position.x) > BoardLimit) return true;
+            return Mathf.Abs(transform.position.z) > BoardLimit;
         }
 
         private void DeleteMaterial()

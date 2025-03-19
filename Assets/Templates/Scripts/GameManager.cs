@@ -10,6 +10,7 @@ namespace CrazyPawn
         public Chessboard Chessboard;
         public PawnController PawnController;
         public ConnectionManager ConnectionManager;
+        public SocketManager SocketManager;
 
         private void Awake()
         {

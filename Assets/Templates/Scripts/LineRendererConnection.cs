@@ -21,34 +21,40 @@ namespace CrazyPawn
             lineRenderer.endWidth = 0.07f;
             lineRenderer.material = new Material(Shader.Find("Unlit/Color")) { color = Color.white };
 
-            UpdateLine();
+            UpdateLineAfterConnection();
             SubscriveEvents();
         }
 
         private void SubscriveEvents()
         {
-            connectorA.GetPawn().OnDestroyed += DestroyConnection;
-            connectorB.GetPawn().OnDestroyed += DestroyConnection;
+            connectorA.ParentPawn.OnDestroyed += DestroyConnection;
+            connectorB.ParentPawn.OnDestroyed += DestroyConnection;
             
-            connectorA.GetPawn().OnPositionChanged += UpdateLine;
-            connectorB.GetPawn().OnPositionChanged += UpdateLine;
+            connectorA.ParentPawn.OnPositionChanged += UpdateLineAfterConnection;
+            connectorB.ParentPawn.OnPositionChanged += UpdateLineAfterConnection;
         }
         
         private void UnSubscriveEvents()
         {
-            connectorA.GetPawn().OnDestroyed -= DestroyConnection;
-            connectorB.GetPawn().OnDestroyed -= DestroyConnection;
+            connectorA.ParentPawn.OnDestroyed -= DestroyConnection;
+            connectorB.ParentPawn.OnDestroyed -= DestroyConnection;
             
-            connectorA.GetPawn().OnPositionChanged -= UpdateLine;
-            connectorB.GetPawn().OnPositionChanged -= UpdateLine;
+            connectorA.ParentPawn.OnPositionChanged -= UpdateLineAfterConnection;
+            connectorB.ParentPawn.OnPositionChanged -= UpdateLineAfterConnection;
         }
 
-        private void UpdateLine()
+        private void UpdateLineAfterConnection()
         {
             if (connectorA == null || connectorB == null) return;
             lineRenderer.SetPosition(0, connectorA.transform.position);
             lineRenderer.SetPosition(1, connectorB.transform.position);
         }
+
+        private void UpdateLine()
+        {
+            
+        }
+
 
         private void DestroyConnection()
         {

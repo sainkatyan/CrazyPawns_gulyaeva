@@ -302,8 +302,8 @@ GameObject:
   - component: {fileID: 2139539075}
   - component: {fileID: 2139539076}
   - component: {fileID: 2139539073}
-  - component: {fileID: 2139539078}
   - component: {fileID: 2139539077}
+  - component: {fileID: 2139539078}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -355,6 +355,7 @@ MonoBehaviour:
   Chessboard: {fileID: 809600273}
   PawnController: {fileID: 2139539073}
   ConnectionManager: {fileID: 2139539077}
+  SocketManager: {fileID: 2139539078}
 --- !u!114 &2139539076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -392,10 +393,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2139539072}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09f4de8ab2144e67818b92cc2bbc9e22, type: 3}
+  m_Script: {fileID: 11500000, guid: 66fd9009bb234e3daea6a28c5de4aa79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activatedSockets: []
+  allSockets: []
 --- !u!1001 &3515523165878480591
 PrefabInstance:
   m_ObjectHideFlags: 0
