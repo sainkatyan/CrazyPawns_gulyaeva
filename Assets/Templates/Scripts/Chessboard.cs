@@ -32,6 +32,10 @@ namespace CrazyPawn
         private void ChangeSize()
         {
             float cellScale = chessboardMaterial.GetFloat("_Scale") / 2f;
+            if ((settings.CheckerboardSize % 2) == 1)
+            {
+                chessboardMaterial.SetFloat("_Offset", cellScale / 2f);
+            }
             float chessboardSize = settings.CheckerboardSize * cellScale;
             float localHeight = transform.localScale.y;
             

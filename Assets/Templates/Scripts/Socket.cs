@@ -9,8 +9,9 @@ namespace CrazyPawn
         [SerializeField] private Material defaultMaterial;
     
         private Renderer renderer;
-        private static Socket selectedConnector;
+        private static Socket selectedSocket;
         private static List<Socket> allSockets = new List<Socket>();
+
 
         private void Awake()
         {
@@ -30,39 +31,41 @@ namespace CrazyPawn
 
         private void OnMouseDown()
         {
-            if (selectedConnector == null)
+            /*if (selectedSocket == null)
             {
+                Debug.Log("OnMouseDown");
                 StartConnection();
             }
             else
             {
+                Debug.Log("OnMouseDown");
                 FinishConnection();
-            }
+            }*/
         }
 
         private void StartConnection()
         {
-            selectedConnector = this;
+            selectedSocket = this;
             HighlightAvailableConnectors(true);
         }
 
         private void FinishConnection()
         {
-            if (selectedConnector != this && CanConnectTo(selectedConnector))
+            if (selectedSocket != this && CanConnectTo(selectedSocket))
             {
-                GameManager.Instance.ConnectionManager.CreateConnection(selectedConnector, this);
+                GameManager.Instance.ConnectionManager.CreateConnection(selectedSocket, this);
             }
-            selectedConnector.HighlightAvailableConnectors(false);
-            selectedConnector = null;
+            selectedSocket.HighlightAvailableConnectors(false);
+            selectedSocket = null;
         }
 
         private void HighlightAvailableConnectors(bool highlight)
         {
-            foreach (var connector in allSockets)
+            foreach (var socket in allSockets)
             {
-                if (connector != this && CanConnectTo(connector))
+                if (socket != this && CanConnectTo(socket))
                 {
-                    connector.renderer.material = highlight ? activeMaterial : defaultMaterial;
+                    socket.renderer.material = highlight ? activeMaterial : defaultMaterial;
                 }
             }
         }
@@ -79,6 +82,7 @@ namespace CrazyPawn
 
         public void OnDragEnd()
         {
+            
             HighlightAvailableConnectors(false);
         }
 

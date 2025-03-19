@@ -5,6 +5,7 @@ Shader "Custom/Chessboard"
         _Scale ("Scale", Float) = 1.5
         _Color1 ("Color 1", Color) = (1,1,1,1)
         _Color2 ("Color 2", Color) = (0,0,0,1)
+        _Offset ("Offset", Float) = 0.0
     }
     SubShader
     {
@@ -32,6 +33,7 @@ Shader "Custom/Chessboard"
             float _Scale;
             fixed4 _Color1;
             fixed4 _Color2;
+            float _Offset;
 
             v2f vert (appdata_t v)
             {
@@ -54,7 +56,7 @@ Shader "Custom/Chessboard"
 
             fixed4 frag (v2f i) : SV_Target
             {
-                float value = Chessboard(i.worldPos);
+                float value = Chessboard(i.worldPos + float3(_Offset, 0.0, _Offset));
                 return lerp(_Color1, _Color2, value);
             }
 

@@ -395,6 +395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09f4de8ab2144e67818b92cc2bbc9e22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activatedSockets: []
 --- !u!1001 &3515523165878480591
 PrefabInstance:
   m_ObjectHideFlags: 0
