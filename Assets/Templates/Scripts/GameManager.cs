@@ -1,6 +1,9 @@
-﻿using UnityEngine;
+﻿using CrazyPawn;
+using Templates.Scripts.Pawn;
+using Templates.Scripts.Socket;
+using UnityEngine;
 
-namespace CrazyPawn
+namespace Templates.Scripts
 {
     public class GameManager : MonoBehaviour
     {
@@ -8,7 +11,7 @@ namespace CrazyPawn
         
         public CrazyPawnSettings Settings;
         public Chessboard Chessboard;
-        public PawnController PawnController;
+        public PawnManager PawnManager;
         public ConnectionManager ConnectionManager;
         public SocketManager SocketManager;
 

@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace CrazyPawn
+namespace Templates.Scripts.Socket
 {
     public class SocketManager : MonoBehaviour
     {
-        public List<Socket> allSockets = new List<Socket>();
+        public static List<Socket> allSockets = new List<Socket>();
         
         public bool CanConnect(Socket selectedSocket, Socket otherSocket)
         {

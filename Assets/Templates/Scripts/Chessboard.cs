@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using CrazyPawn;
+using UnityEngine;
 
-namespace CrazyPawn
+namespace Templates.Scripts
 {
     public class Chessboard : MonoBehaviour
     {
@@ -51,7 +52,7 @@ namespace CrazyPawn
 
         public float GetChessboardLimit()
         {
-            return transform.localScale.x / 2f - 1f;
+            return transform.localScale.x / 2f;
         }
     }
 }

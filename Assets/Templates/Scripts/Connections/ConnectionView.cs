@@ -1,15 +1,17 @@
 ﻿using System;
+using Templates.Scripts;
+using Templates.Scripts.Socket;
 using Unity.VisualScripting;
 using UnityEngine;
 
 namespace CrazyPawn
 {
-    public class LineRendererConnection : MonoBehaviour
+    public class ConnectionView : MonoBehaviour
     {
         private Socket connectorA;
         private Socket connectorB;
         private LineRenderer lineRenderer;
-
+        private const float WIDTH = 0.07f;
         public void Initialize(Socket a, Socket b)
         {
             connectorA = a;
@@ -17,11 +19,11 @@ namespace CrazyPawn
             lineRenderer = GetComponent<LineRenderer>();
 
             lineRenderer.positionCount = 2;
-            lineRenderer.startWidth = 0.07f;
-            lineRenderer.endWidth = 0.07f;
+            lineRenderer.startWidth = WIDTH;
+            lineRenderer.endWidth = WIDTH;
             lineRenderer.material = new Material(Shader.Find("Unlit/Color")) { color = Color.white };
 
-            UpdateLineAfterConnection();
+            UpdateLineConnection();
             SubscriveEvents();
         }
 
@@ -30,8 +32,8 @@ namespace CrazyPawn
             connectorA.ParentPawn.OnDestroyed += DestroyConnection;
             connectorB.ParentPawn.OnDestroyed += DestroyConnection;
             
-            connectorA.ParentPawn.OnPositionChanged += UpdateLineAfterConnection;
-            connectorB.ParentPawn.OnPositionChanged += UpdateLineAfterConnection;
+            connectorA.ParentPawn.OnPositionChanged += UpdateLineConnection;
+            connectorB.ParentPawn.OnPositionChanged += UpdateLineConnection;
         }
         
         private void UnSubscriveEvents()
@@ -39,22 +41,15 @@ namespace CrazyPawn
             connectorA.ParentPawn.OnDestroyed -= DestroyConnection;
             connectorB.ParentPawn.OnDestroyed -= DestroyConnection;
             
-            connectorA.ParentPawn.OnPositionChanged -= UpdateLineAfterConnection;
-            connectorB.ParentPawn.OnPositionChanged -= UpdateLineAfterConnection;
+            connectorA.ParentPawn.OnPositionChanged -= UpdateLineConnection;
+            connectorB.ParentPawn.OnPositionChanged -= UpdateLineConnection;
         }
-
-        private void UpdateLineAfterConnection()
+        private void UpdateLineConnection()
         {
             if (connectorA == null || connectorB == null) return;
             lineRenderer.SetPosition(0, connectorA.transform.position);
             lineRenderer.SetPosition(1, connectorB.transform.position);
         }
-
-        private void UpdateLine()
-        {
-            
-        }
-
 
         private void DestroyConnection()
         {

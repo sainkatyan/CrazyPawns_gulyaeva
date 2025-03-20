@@ -1,21 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using CrazyPawn;
 using UnityEngine;
 
-namespace CrazyPawn
+namespace Templates.Scripts.Socket
 {
     public class Socket : MonoBehaviour, IDraggable
     {
         [SerializeField] private Material activeMaterial;
         [SerializeField] private Material defaultMaterial;
-        public Pawn ParentPawn => parentPawn;
+        public Pawn.Pawn ParentPawn => parentPawn;
         
         private SocketManager socketManager;
         private Renderer renderer;
-        private Pawn parentPawn;
+        private Pawn.Pawn parentPawn;
         private void Awake()
         {
             renderer = GetComponent<Renderer>();
-            parentPawn = GetComponentInParent<Pawn>();
+            parentPawn = GetComponentInParent<Pawn.Pawn>();
             socketManager = GameManager.Instance.SocketManager;
             
             parentPawn.AddSocket(this);

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CrazyPawn
+namespace Templates.Scripts
 {
     public interface IDraggable
     {

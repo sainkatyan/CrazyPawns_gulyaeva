@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
 
-namespace CrazyPawn
+namespace Templates.Scripts
 {
     public class InputController : MonoBehaviour
     {
         private Camera camera;
         private IDraggable currentDraggablePawn;
-        private Socket draggingSocket;
+        private Socket.Socket draggingSocket;
         [SerializeField] private Transform chessboard;
+        [SerializeField] private Transform outBoard;
         private float timer;
         private bool isSecondClick = false;
         private GameManager gameManager;
@@ -23,10 +24,7 @@ namespace CrazyPawn
             if (Input.GetMouseButtonDown(0))
             {
                 timer = Time.time;
-                
-                
-                    TryStartDrag();
-                
+                TryStartDrag();
             }
 
             if (Input.GetMouseButton(0) && currentDraggablePawn != null)
@@ -42,7 +40,6 @@ namespace CrazyPawn
                     {
                         isSecondClick = true;
                         
-                        Debug.Log("Start");
                         TryStartDrag();
                     }
                     else
@@ -50,8 +47,6 @@ namespace CrazyPawn
                         isSecondClick = false;
                         if (draggingSocket != null)
                         {
-                            Debug.Log("End");
-
                             if (draggingSocket != null)
                             {
                                 FinishDrag();
@@ -89,7 +84,9 @@ namespace CrazyPawn
 
                 if (isSecondClick == false)
                 {
-                    draggingSocket = hit.collider.GetComponent<Socket>();
+                    IDraggable draggable = hit.collider.GetComponent<IDraggable>();
+                    
+                    draggingSocket = hit.collider.GetComponent<Socket.Socket>();
                     if (draggingSocket != null)
                     {
                         draggingSocket.OnDragStart();
@@ -104,7 +101,7 @@ namespace CrazyPawn
             Ray ray = camera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
             {
-                if (hit.transform == chessboard.transform)
+                if (hit.transform == chessboard.transform || hit.transform == outBoard)
                 {
                     Vector3 newPosition = hit.point;
                     currentDraggablePawn.OnDrag(new Vector3(newPosition.x, 0f, newPosition.z));
@@ -117,15 +114,13 @@ namespace CrazyPawn
             Ray ray = camera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                Socket targetSocket = hit.collider.GetComponent<Socket>();
+                Socket.Socket targetSocket = hit.collider.GetComponent<Socket.Socket>();
                 if (targetSocket == null)
                 {
                     gameManager.SocketManager.HighlightAvailableConnectors(draggingSocket,false);
                     draggingSocket = null;
-                    
                     return;
                 }
-
                 if (CanConnect(targetSocket))
                 {
                     gameManager.ConnectionManager.CreateConnection(draggingSocket, targetSocket);
@@ -139,7 +134,7 @@ namespace CrazyPawn
             }
         }
 
-        private bool CanConnect( Socket targetSocket)
+        private bool CanConnect( Socket.Socket targetSocket)
         {
             return targetSocket != null && draggingSocket != targetSocket 
                                         && gameManager.SocketManager.CanConnect(draggingSocket, targetSocket);

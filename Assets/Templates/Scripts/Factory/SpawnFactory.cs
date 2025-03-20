@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
-namespace CrazyPawn
+namespace Templates.Scripts.Factory
 {
     public class SpawnFactory<T> where T : MonoBehaviour
     {

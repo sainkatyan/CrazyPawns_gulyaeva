@@ -1,4 +1,4 @@
-﻿namespace CrazyPawn
+﻿namespace Templates.Scripts.Factory
 {
     public interface ISpawnable
     {

@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using Templates.Scripts.Factory;
 using UnityEngine;
 
-namespace CrazyPawn
+namespace Templates.Scripts.Pawn
 {
     public class Pawn : MonoBehaviour, ISpawnable, IDraggable
     {
         [SerializeField] private CrazyPawnSettings settings;
         [SerializeField] private BoxCollider pawnBodyCollider;
-        [SerializeField] private List<Socket> currentSockets;
+        [SerializeField] private List<Socket.Socket> currentSockets;
         public event Action OnPositionChanged;
         public event Action OnDestroyed;
 
@@ -29,7 +30,7 @@ namespace CrazyPawn
             InitPawnSettings();
         }
 
-        private void SetChildrenAllMaterials() //should add in inspector changable materials
+        private void SetChildrenAllMaterials() 
         {
             renderers = new List<MeshRenderer>();
             foreach (MeshRenderer item in gameObject.GetComponentsInChildren(typeof(MeshRenderer)))
@@ -48,18 +49,18 @@ namespace CrazyPawn
 
         private void Start()
         {
-            AddCurrentSockets();
+            SendCurrentSockets();
         }
 
-        public void AddSocket(Socket socket)
+        public void AddSocket(Socket.Socket socket)
         {
             if (currentSockets.Contains(socket)) return;
             currentSockets.Add(socket);
         }
 
-        private void AddCurrentSockets()
+        private void SendCurrentSockets()
         {
-            foreach (Socket item in currentSockets)
+            foreach (Socket.Socket item in currentSockets)
             {
                 GameManager.Instance.SocketManager.AddSocket(item);
             }
@@ -67,7 +68,7 @@ namespace CrazyPawn
 
         private void RemoveCurrentSockets()
         {
-            foreach (Socket item in currentSockets)
+            foreach (Socket.Socket item in currentSockets)
             {
                 GameManager.Instance.SocketManager.RemoveSocket(item);
             }
@@ -115,6 +116,7 @@ namespace CrazyPawn
             }
         }
 
+
         private void CheckBounds()
         {
             if (IsOutside() && !isOutBounds)
@@ -131,8 +133,8 @@ namespace CrazyPawn
 
         private bool IsOutside()
         {
-            if (Mathf.Abs(transform.position.x) > BoardLimit) return true;
-            return Mathf.Abs(transform.position.z) > BoardLimit;
+            if (Mathf.Abs(transform.position.x) >= BoardLimit) return true;
+            return Mathf.Abs(transform.position.z) >= BoardLimit;
         }
 
         private void DeleteMaterial()

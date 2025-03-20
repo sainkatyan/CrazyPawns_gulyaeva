@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿using CrazyPawn;
+using Templates.Scripts.Factory;
+using UnityEngine;
 
-namespace CrazyPawn
+namespace Templates.Scripts.Pawn
 {
-    public class PawnController : MonoBehaviour
+    public class PawnManager : MonoBehaviour
     {
         [SerializeField] private Pawn pawn;
         
